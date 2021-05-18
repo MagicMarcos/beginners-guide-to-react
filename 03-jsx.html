@@ -1,11 +1,14 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    const rootElement = document.getElementById('root')
-    const element = <div className="container">Hello World</div>
-    ReactDOM.render(element, rootElement)
-  </script>
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<!-- JSX is not natively supported by browsers so we must use Babel - we can do this without downloading anything in the script below but shouldn't be used in production -->
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+	<script type="text/babel">
+		const rootElement = document.getElementById('root');
+		//JSX allows us to use HTML syntax to create elements with react, without using the react createElement API
+		const element = <div className="container">Hello World</div>;
+		ReactDOM.render(element, rootElement);
+	</script>
 </body>

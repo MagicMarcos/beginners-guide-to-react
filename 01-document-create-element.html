@@ -1,10 +1,15 @@
 <body>
-  <div id="root"></div>
-  <script type="text/javascript">
-    const rootElement = document.getElementById('root')
-    const element = document.createElement('div')
-    element.textContent = 'Hello World'
-    element.className = 'container'
-    rootElement.appendChild(element)
-  </script>
+	<div id="root"></div>
+	<!-- javascript in html -->
+	<script type="text/javascript">
+		//give access to the div
+		const rootElement = document.getElementById('root');
+		//creating an element to append child
+		const element = document.createElement('div');
+		//element properties
+		element.textContent = 'Hello World';
+		element.className = 'container';
+		//append the element created in js to the root element
+		rootElement.appendChild(element);
+	</script>
 </body>

@@ -1,14 +1,25 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    const rootElement = document.getElementById('root')
-    const children = 'Hello World'
-    const className = 'container'
-    const props = {children, className}
-    const element = <div {...props} />
-    ReactDOM.render(element, rootElement)
-  </script>
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script type="text/babel">
+		const rootElement = document.getElementById('root');
+		const children = 'Hello World';
+		const className = 'container';
+
+		const props = { children, className };
+
+		//curly braces tells babel to leave this alone and pass in whatever is in th props variable
+		//note that we can use self closing tags for divs because ultimately this isn't html
+		const element = (
+			<div
+				id="app-root"
+				{...props}
+				className="not-container" //-> with this we can overwrite the className that is in the props -> whatever comes last wins
+			/>
+		);
+
+		ReactDOM.render(element, rootElement);
+	</script>
 </body>

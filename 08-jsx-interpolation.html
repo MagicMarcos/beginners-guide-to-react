@@ -1,26 +1,41 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    function CharacterCount({text}) {
-      return (
-        <div>
-          {`The text "${text}" has `}
-          {text.length ? <strong>{text.length}</strong> : 'No'}
-          {' characters'}
-        </div>
-      )
-    }
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script type="text/babel">
+		// here we see how we can div in and out of JS and JSX
+		function CharacterCount({ text }) {
+			//this is JS
+			return (
+				// the conditional is only there to determine whether the result is <strong>
 
-    const element = (
-      <>
-        <CharacterCount text="Hello World" />
-        <CharacterCount text="" />
-      </>
-    )
+				//this is now JSX
+				<div>
+					{
+						/* JS but only expressions, no for loops or if statements */ `The text "${text}" has `
+					}
+					{
+						/*ternary expressions are ok*/ text.length ? (
+							< /*JSX*/strong> {/*JS*/text.length}< /*JSX*/strong>
+						) /*JS*/: (
+							'No'
+						)
+					}
+					{' characters'}
+				</div>
+				//back to JS
+			);
+		}
+		//The text 'Hello World' has 11 characters
+		// the text '' has No characters
+		const element = (
+			<>
+				<CharacterCount text="Hello World" />
+				<CharacterCount text="" />
+			</>
+		);
 
-    ReactDOM.render(element, document.getElementById('root'))
-  </script>
+		ReactDOM.render(element, document.getElementById('root'));
+	</script>
 </body>

@@ -1,124 +1,132 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    // https://github.com/donavon/hook-flow
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script type="text/babel">
+		// https://github.com/donavon/hook-flow
 
-    function Child() {
-      console.log('%c    Child: render start', 'color: MediumSpringGreen')
+		//check the console.log for more information on what comes first as this is not complete
 
-      const [count, setCount] = React.useState(() => {
-        console.log('%c    Child: useState callback', 'color: tomato')
-        return 0
-      })
+		function Child() {
+			console.log('%c    Child: render start', 'color: MediumSpringGreen');
 
-      React.useEffect(() => {
-        console.log('%c    Child: useEffect no deps', 'color: LightCoral')
-        return () => {
-          console.log(
-            '%c    Child: useEffect no deps cleanup',
-            'color: LightCoral',
-          )
-        }
-      })
+			const [count, setCount] = React.useState(() => {
+				console.log('%c    Child: useState callback', 'color: tomato');
+				return 0;
+			});
 
-      React.useEffect(() => {
-        console.log(
-          '%c    Child: useEffect empty deps',
-          'color: MediumTurquoise',
-        )
-        return () => {
-          console.log(
-            '%c    Child: useEffect empty deps cleanup',
-            'color: MediumTurquoise',
-          )
-        }
-      }, [])
+			React.useEffect(() => {
+				console.log('%c    Child: useEffect no deps', 'color: LightCoral');
+				return () => {
+					console.log(
+						'%c    Child: useEffect no deps cleanup',
+						'color: LightCoral'
+					);
+				};
+			});
 
-      React.useEffect(() => {
-        console.log('%c    Child: useEffect with dep', 'color: HotPink')
-        return () => {
-          console.log(
-            '%c    Child: useEffect with dep cleanup',
-            'color: HotPink',
-          )
-        }
-      }, [count])
+			React.useEffect(() => {
+				console.log(
+					'%c    Child: useEffect empty deps',
+					'color: MediumTurquoise'
+				);
+				return () => {
+					console.log(
+						'%c    Child: useEffect empty deps cleanup',
+						'color: MediumTurquoise'
+					);
+				};
+			}, []);
 
-      const element = (
-        <button onClick={() => setCount(previousCount => previousCount + 1)}>
-          {count}
-        </button>
-      )
+			React.useEffect(() => {
+				console.log('%c    Child: useEffect with dep', 'color: HotPink');
+				return () => {
+					console.log(
+						'%c    Child: useEffect with dep cleanup',
+						'color: HotPink'
+					);
+				};
+			}, [count]);
 
-      console.log('%c    Child: render end', 'color: MediumSpringGreen')
+			const element = (
+				<button onClick={() => setCount(previousCount => previousCount + 1)}>
+					{count}
+				</button>
+			);
 
-      return element
-    }
+			console.log('%c    Child: render end', 'color: MediumSpringGreen');
 
-    function App() {
-      console.log('%cApp: render start', 'color: MediumSpringGreen')
+			return element;
+		}
 
-      const [showChild, setShowChild] = React.useState(() => {
-        console.log('%cApp: useState callback', 'color: tomato')
-        return false
-      })
+		//first thing that happens when we call to render the app
+		function App() {
+			console.log('%cApp: render start', 'color: MediumSpringGreen');
 
-      React.useEffect(() => {
-        console.log('%cApp: useEffect no deps', 'color: LightCoral')
-        return () => {
-          console.log('%cApp: useEffect no deps cleanup', 'color: LightCoral')
-        }
-      })
+			//Second -> we call react use state -> react immediately calls this function to return the initial state for showChild
+			const [showChild, setShowChild] = React.useState(() => {
+				console.log('%cApp: useState callback', 'color: tomato');
+				return false;
+			});
 
-      React.useEffect(() => {
-        console.log('%cApp: useEffect empty deps', 'color: MediumTurquoise')
-        return () => {
-          console.log(
-            '%cApp: useEffect empty deps cleanup',
-            'color: MediumTurquoise',
-          )
-        }
-      }, [])
+			// 3rd we call useEffect -> instead of logging the items within this function we actually create an element
+			React.useEffect(() => {
+				// one the element has been created then we have react asynchronously call on these console.logs
+				console.log('%cApp: useEffect no deps', 'color: LightCoral');
+				return () => {
+					console.log('%cApp: useEffect no deps cleanup', 'color: LightCoral');
+				};
+			});
 
-      React.useEffect(() => {
-        console.log('%cApp: useEffect with dep', 'color: HotPink')
-        return () => {
-          console.log('%cApp: useEffect with dep cleanup', 'color: HotPink')
-        }
-      }, [showChild])
+			React.useEffect(() => {
+				// this comes after the above async return
+				console.log('%cApp: useEffect empty deps', 'color: MediumTurquoise');
+				return () => {
+					console.log(
+						'%cApp: useEffect empty deps cleanup',
+						'color: MediumTurquoise'
+					);
+				};
+			}, []);
 
-      const element = (
-        <>
-          <label>
-            <input
-              type="checkbox"
-              checked={showChild}
-              onChange={e => setShowChild(e.target.checked)}
-            />{' '}
-            show child
-          </label>
-          <div
-            style={{
-              padding: 10,
-              margin: 10,
-              height: 30,
-              width: 30,
-              border: 'solid',
-            }}
-          >
-            {showChild ? <Child /> : null}
-          </div>
-        </>
-      )
+			React.useEffect(() => {
+				//this comes after the above use effect -> includes our showChild state
+				console.log('%cApp: useEffect with dep', 'color: HotPink');
+				return () => {
+					console.log('%cApp: useEffect with dep cleanup', 'color: HotPink');
+				};
+			}, [showChild]);
 
-      console.log('%cApp: render end', 'color: MediumSpringGreen')
+			const element = (
+				<>
+					<label>
+						<input
+							type="checkbox"
+							checked={showChild}
+							onChange={e => setShowChild(e.target.checked)}
+						/>{' '}
+						show child
+					</label>
+					<div
+						style={{
+							padding: 10,
+							margin: 10,
+							height: 30,
+							width: 30,
+							border: 'solid',
+						}}
+					>
+						{showChild ? <Child /> : null}
+					</div>
+				</>
+			);
+			// this is the result of calling on the the react useEffect function
+			console.log('%cApp: render end', 'color: MediumSpringGreen');
 
-      return element
-    }
+			return element;
+		}
 
-    ReactDOM.render(<App />, document.getElementById('root'))
-  </script>
+		ReactDOM.render(<App />, document.getElementById('root'));
+	</script>
 </body>

@@ -1,27 +1,34 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    function UsernameForm() {
-      function handleSubmit(event) {
-        event.preventDefault()
-        const username = event.target.elements.usernameInput.value
-        alert(`You entered: ${username}`)
-      }
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script type="text/babel">
+		function UsernameForm() {
+			// const usernameInputRef = React.useRef() this is used to accomplish the same thing and is referenced in the function below -> if you don't need a ref theres no need to use this
 
-      return (
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="usernameInput">Username:</label>
-            <input id="usernameInput" type="text" />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      )
-    }
+			function handleSubmit(event) {
+				//preventDefault will keep the page from reloading when we submit our form -- a default behavior in js
+				event.preventDefault();
 
-    ReactDOM.render(<UsernameForm />, document.getElementById('root'))
-  </script>
+				//elements is a property of the form node
+				const username = event.target.elements.usernameInput.value;
+
+				// const username = usernameInputRef.current.value this accomplishes the same thing
+				alert(`You entered: ${username}`);
+			}
+
+			return (
+				<form onSubmit={handleSubmit}>
+					<div>
+						<label htmlFor="usernameInput">Username:</label>
+						<input id="usernameInput" type="text" />
+					</div>
+					<button type="submit">Submit</button>
+				</form>
+			);
+		}
+
+		ReactDOM.render(<UsernameForm />, document.getElementById('root'));
+	</script>
 </body>

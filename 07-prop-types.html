@@ -1,26 +1,33 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
-  <script type="text/babel">
-    const rootElement = document.getElementById('root')
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
 
-    function SayHello({firstName, lastName}) {
-      return (
-        <div>
-          Hello {firstName} {lastName}!
-        </div>
-      )
-    }
-    SayHello.propTypes = {
-      firstName: PropTypes.string.isRequired,
-      lastName: PropTypes.string.isRequired,
-    }
+	<!-- this creates a global variable called propTypes -> by default they're not required so we had a .Required-->
+	<script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
+	<script type="text/babel">
+		const rootElement = document.getElementById('root');
 
-    const element = <SayHello firstName={false} />
+		function SayHello({ firstName, lastName }) {
+			return (
+				<div>
+					Hello {firstName} {lastName}!
+				</div>
+			);
+		}
 
-    ReactDOM.render(element, rootElement)
-  </script>
+		//PropTypes allows us to validate the types of prop that are being told to render -> with this we can make sure that people are using your proptypes the right way
+		//propTypes are not used the production version so we don't need to worry about it slowing down the app -> we can also install a proptype removal plugin for babel
+		SayHello.propTypes = {
+			firstName: PropTypes.string.isRequired,
+			lastName: PropTypes.string.isRequired,
+		};
+
+		//without the protypes we would get no error if we rendered this, even though first name should be a string and not a boolean
+		//we also don't have a last name defined and we want it to be a string that is required
+		const element = <SayHello firstName={false} />;
+
+		ReactDOM.render(element, rootElement);
+	</script>
 </body>

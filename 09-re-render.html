@@ -1,22 +1,27 @@
 <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    const rootElement = document.getElementById('root')
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script type="text/babel">
+		//clock application ->
 
-    function tick() {
-      const time = new Date().toLocaleTimeString()
-      const element = (
-        <>
-          <input value={time} />
-          <input value={time} />
-        </>
-      )
-      ReactDOM.render(element, rootElement)
-    }
+		const rootElement = document.getElementById('root');
 
-    setInterval(tick, 1000)
-  </script>
+		// we have to refresh to get the updated time without this function which we call every one second
+		function tick() {
+			const time = new Date().toLocaleTimeString();
+			const element = (
+				<>
+					<input value={time} />
+					<input value={time} />
+				</>
+			);
+
+			ReactDOM.render(element, rootElement);
+		}
+
+		//we call the tick function to update every second
+		setInterval(tick, 1000);
+	</script>
 </body>
